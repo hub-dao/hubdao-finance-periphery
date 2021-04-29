@@ -1,6 +1,6 @@
-# Pancake Router
+# Hubdao Router
 
-### Bsc-Test
+### HECO-Test
 
 The following assumes the use of `node@>=10`.
 

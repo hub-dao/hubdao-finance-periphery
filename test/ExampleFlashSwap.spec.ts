@@ -1,13 +1,15 @@
 import chai, { expect } from 'chai'
 import { Contract } from 'ethers'
 import { MaxUint256 } from 'ethers/constants'
-import { BigNumber, bigNumberify, defaultAbiCoder, formatEther } from 'ethers/utils'
+import { BigNumber, bigNumberify, defaultAbiCoder, formatEther, keccak256 } from 'ethers/utils'
 import { solidity, MockProvider, createFixtureLoader, deployContract } from 'ethereum-waffle'
 
 import { expandTo18Decimals } from './shared/utilities'
 import { v2Fixture } from './shared/fixtures'
 
 import ExampleFlashSwap from '../build/ExampleFlashSwap.json'
+
+import { bytecode } from '@hubdao-finance/hubdao-core/build/HubdaoPair.json'
 
 chai.use(solidity)
 
@@ -43,9 +45,13 @@ describe('ExampleFlashSwap', () => {
       [fixture.factoryV2.address, fixture.factoryV1.address, fixture.router.address],
       overrides
     )
+    
+    // init hash
+    const COMPUTED_INIT_CODE_HASH = keccak256(`0x${bytecode}`)
+    console.log(COMPUTED_INIT_CODE_HASH)
   })
 
-  it('uniswapV2Call:0', async () => {
+  it('hubdaoCall:0', async () => {
     // add liquidity to V1 at a rate of 1 ETH / 200 X
     const WETHPartnerAmountV1 = expandTo18Decimals(2000)
     const ETHAmountV1 = expandTo18Decimals(10)
@@ -65,7 +71,7 @@ describe('ExampleFlashSwap', () => {
 
     const balanceBefore = await WETHPartner.balanceOf(wallet.address)
 
-    // now, execute arbitrage via uniswapV2Call:
+    // now, execute arbitrage via hubdaoCall:
     // receive 1 ETH from V2, get as much X from V1 as we can, repay V2 with minimum X, keep the rest!
     const arbitrageAmount = expandTo18Decimals(1)
     // instead of being 'hard-coded', the above value could be calculated optimally off-chain. this would be
@@ -98,7 +104,7 @@ describe('ExampleFlashSwap', () => {
     expect(priceV2.toString()).to.eq('123') // we pushed the v2 price up to ~123
   })
 
-  it('uniswapV2Call:1', async () => {
+  it('hubdaoCall:1', async () => {
     // add liquidity to V1 at a rate of 1 ETH / 100 X
     const WETHPartnerAmountV1 = expandTo18Decimals(1000)
     const ETHAmountV1 = expandTo18Decimals(10)
@@ -118,7 +124,7 @@ describe('ExampleFlashSwap', () => {
 
     const balanceBefore = await provider.getBalance(wallet.address)
 
-    // now, execute arbitrage via uniswapV2Call:
+    // now, execute arbitrage via hubdaoCall:
     // receive 200 X from V2, get as much ETH from V1 as we can, repay V2 with minimum ETH, keep the rest!
     const arbitrageAmount = expandTo18Decimals(200)
     // instead of being 'hard-coded', the above value could be calculated optimally off-chain. this would be
@@ -146,7 +152,7 @@ describe('ExampleFlashSwap', () => {
     const priceV2 =
       WETHPairToken0 === WETHPartner.address ? reservesV2[0].div(reservesV2[1]) : reservesV2[1].div(reservesV2[0])
 
-    expect(formatEther(profit)).to.eq('0.548043441089763649') // our profit is ~.5 ETH
+    expect(formatEther(profit)).to.eq('0.549160128939998834') // our profit is ~.5 ETH
     expect(priceV1.toString()).to.eq('143') // we pushed the v1 price up to ~143
     expect(priceV2.toString()).to.eq('161') // we pushed the v2 price down to ~161
   })
