@@ -21,7 +21,7 @@ library HubdaoLibrary {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'9ab964ba30aa2cbeea9004b654b6010464367ab074491fa05421b403bf8a2a95' // init code hash
+                hex'6ce6f1ecdb73205005d525c8326e3cfeecbd39d9dd83af8dc02a13fabf55b573' // init code hash
             ))));
     }
 

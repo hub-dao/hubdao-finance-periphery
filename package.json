@@ -15,8 +15,8 @@
     "contracts"
   ],
   "dependencies": {
+    "@hubdao-finance/hubdao-core": "^0.1.1",
     "@uniswap/lib": "1.1.1",
-    "@hubdao-finance/hubdao-core": "0.1.0",
     "truffle-hdwallet-provider": "^1.0.17",
     "truffle-plugin-verify": "^0.4.0"
   },

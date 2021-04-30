@@ -1235,10 +1235,10 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@hubdao-finance/hubdao-core@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@hubdao-finance/hubdao-core/-/hubdao-core-0.1.0.tgz#04e1c4118988f659f20861503e4e2df2d67ce0ea"
-  integrity sha512-lJqMyQ3RuXcYNg+9baxchPeUxTesy+Wi9wl3qMpOYW3IhAzeWF3K1TdD6+T88daDRx1/9YPy3DTkgBgw69ItNg==
+"@hubdao-finance/hubdao-core@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@hubdao-finance/hubdao-core/-/hubdao-core-0.1.1.tgz#cbf9f9d51d301c10f24feee4f2121bb1774b0687"
+  integrity sha512-7oTzT5J3SnFyaTkmdNiBN61ncJgfbB9040IKPc5czCvqcttlZ9JeMsFSjDL1RMYWMD3b2DWanFfteERFGsR84w==
   dependencies:
     truffle "^5.1.41"
     truffle-flattener "^1.4.4"
